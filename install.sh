@@ -19,7 +19,7 @@ detect_shell() {
         print_message "$RED" "Error: This installer is for Bash/Zsh shells"
         echo ""
         print_message "$YELLOW" "You appear to be using PowerShell. Please use the PowerShell installer instead:"
-        print_message "$CYAN" "  iwr -useb https://raw.githubusercontent.com/armancurr/cli-password/main/install.ps1 | iex"
+        print_message "$CYAN" "  iwr -useb https://raw.githubusercontent.com/axceee/pazman/main/install.ps1 | iex"
         echo ""
         exit 1
     fi
