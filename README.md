@@ -10,12 +10,12 @@ Stop juggling passwords. Stop reusing them. Stop worrying about security. `pazma
 
 ### Linux / macOS
 ```bash
-curl -fsSL https://raw.githubusercontent.com/armancurr/cli-password/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/axceee/pazman/main/install.sh | bash
 ```
 
 ### Windows (PowerShell)
 ```powershell
-iwr -useb https://raw.githubusercontent.com/armancurr/cli-password/main/install.ps1 | iex
+iwr -useb https://raw.githubusercontent.com/axceee/pazman/main/install.ps1 | iex
 ```
 
 ---
@@ -96,7 +96,7 @@ COMMANDS:
 
 ```bash
 # Download the script
-curl -O https://raw.githubusercontent.com/armancurr/cli-password/main/pazman
+curl -O https://raw.githubusercontent.com/axceee/pazman/main/pazman
 
 # Make it executable
 chmod +x pazman
