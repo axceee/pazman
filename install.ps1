@@ -1,10 +1,10 @@
 # pazman PowerShell Installer
-# Usage: iwr -useb https://raw.githubusercontent.com/armancurr/cli-password/main/install.ps1 | iex
+# Usage: iwr -useb https://raw.githubusercontent.com/axceee/pazman/main/install.ps1 | iex
 
 $ErrorActionPreference = "Stop"
 
 # Configuration
-$RepoUrl = "https://raw.githubusercontent.com/armancurr/cli-password/main"
+$RepoUrl = "https://raw.githubusercontent.com/axceee/pazman/main/install.ps1"
 $InstallDir = "$env:USERPROFILE\.local\bin"
 $ScriptName = "pazman"
 
