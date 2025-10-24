@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# pazman installer script
-# Usage: curl -fsSL https://raw.githubusercontent.com/armancurr/cli-password/main/install.sh | bash
-
 set -e  # Exit on any error
 
 # Colors for pretty output
