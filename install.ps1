@@ -1,10 +1,10 @@
 # pazman PowerShell Installer
-# Usage: iwr -useb https://raw.githubusercontent.com/axceee/pazman/main/install.ps1 | iex
+# Usage: iwr -useb https://raw.githubusercontent.com/armancurr/cli-password/main/install.ps1 | iex
 
 $ErrorActionPreference = "Stop"
 
 # Configuration
-$RepoUrl = "https://raw.githubusercontent.com/axceee/pazman/main/install.ps1"
+$RepoUrl = "https://raw.githubusercontent.com/armancurr/cli-password/main"
 $InstallDir = "$env:USERPROFILE\.local\bin"
 $ScriptName = "pazman"
 
@@ -87,6 +87,12 @@ function Get-PazmanScript {
     
     try {
         Invoke-WebRequest -Uri "$RepoUrl/$ScriptName" -OutFile $targetPath -UseBasicParsing
+        
+        # Convert to Unix line endings (LF) - critical for bash scripts
+        $content = Get-Content $targetPath -Raw
+        $content = $content -replace "`r`n", "`n"
+        [System.IO.File]::WriteAllText($targetPath, $content)
+        
         Write-ColorOutput "[OK] pazman downloaded successfully" "Green"
     } catch {
         Write-ColorOutput "Error: Failed to download pazman" "Red"
@@ -100,26 +106,50 @@ function New-WrapperScript {
     Write-ColorOutput "Creating Windows wrapper script..." "Yellow"
     
     $batchPath = Join-Path $InstallDir "$ScriptName.bat"
+    $scriptPath = Join-Path $InstallDir $ScriptName
     
     # Determine which bash to use
     $gitBashPath = "C:\Program Files\Git\bin\bash.exe"
+    $gitBashPath32 = "C:\Program Files (x86)\Git\bin\bash.exe"
+    
+    # Use forward slashes for the path in batch file
+    $scriptPathUnix = $scriptPath -replace '\\', '/'
     
     $batchContent = @"
 @echo off
 REM pazman wrapper for Windows
-setlocal
+setlocal EnableDelayedExpansion
 
-set SCRIPT_PATH=%~dp0$ScriptName
+REM Get script directory
+set "SCRIPT_DIR=%~dp0"
+set "SCRIPT_PATH=%SCRIPT_DIR%$ScriptName"
 
+REM Try Git Bash (64-bit)
 if exist "$gitBashPath" (
-    "$gitBashPath" "%SCRIPT_PATH%" %*
-) else if where wsl >nul 2>&1 (
-    wsl bash "%SCRIPT_PATH%" %*
-) else (
-    echo Error: Git Bash or WSL not found
-    echo Please install Git for Windows: https://git-scm.com/download/win
-    exit /b 1
+    "$gitBashPath" "!SCRIPT_PATH!" %*
+    exit /b !ERRORLEVEL!
 )
+
+REM Try Git Bash (32-bit)
+if exist "$gitBashPath32" (
+    "$gitBashPath32" "!SCRIPT_PATH!" %*
+    exit /b !ERRORLEVEL!
+)
+
+REM Try WSL
+wsl --list --quiet >nul 2>&1
+if !ERRORLEVEL! EQU 0 (
+    wsl bash "!SCRIPT_PATH!" %*
+    exit /b !ERRORLEVEL!
+)
+
+REM No bash found
+echo Error: Git Bash or WSL not found
+echo.
+echo pazman requires bash to run. Please install one of:
+echo   - Git for Windows: https://git-scm.com/download/win
+echo   - WSL: https://docs.microsoft.com/en-us/windows/wsl/install
+exit /b 1
 "@
     
     Set-Content -Path $batchPath -Value $batchContent -Encoding ASCII
