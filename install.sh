@@ -1,7 +1,7 @@
-#!/bin/bash
+    #!/bin/bash
 
 # pazman installer script
-# Usage: curl -fsSL https://raw.githubusercontent.com/armancurr/cli-password/main/install.sh | bash
+# Usage: curl -fsSL https://raw.githubusercontent.com/axceee/pazman/main/install.sh | bash
 
 set -e  # Exit on any error
 
@@ -26,7 +26,7 @@ detect_shell() {
 }
 
 # Configuration
-REPO_URL="https://raw.githubusercontent.com/armancurr/cli-password/main"
+REPO_URL="https://raw.githubusercontent.com/axceee/pazman/main"
 INSTALL_DIR="$HOME/.local/bin"
 SCRIPT_NAME="pazman"
 
@@ -192,7 +192,7 @@ print_success() {
     echo "  3. Your password is generated and copied!"
     echo ""
     print_message "$BLUE" "Documentation:"
-    echo "  https://github.com/armancurr/cli-password"
+    echo "  https://github.com/axceee/pazman"
     echo ""
 }
 

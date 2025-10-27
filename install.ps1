@@ -1,10 +1,10 @@
 # pazman PowerShell Installer
-# Usage: iwr -useb https://raw.githubusercontent.com/armancurr/cli-password/main/install.ps1 | iex
+# Usage: iwr -useb https://raw.githubusercontent.com/axceee/pazman/main/install.ps1 | iex
 
 $ErrorActionPreference = "Stop"
 
 # Configuration
-$RepoUrl = "https://raw.githubusercontent.com/armancurr/cli-password/main"
+$RepoUrl = "https://raw.githubusercontent.com/axceee/pazman/main"
 $InstallDir = "$env:USERPROFILE\.local\bin"
 $ScriptName = "pazman"
 
@@ -231,7 +231,7 @@ function Show-Success {
     Write-Host "  4. Your password is generated and copied!"
     Write-Host ""
     Write-ColorOutput "Documentation:" "Cyan"
-    Write-Host "  https://github.com/armancurr/cli-password"
+    Write-Host "  https://github.com/axceee/pazman"
     Write-Host ""
 }
 
